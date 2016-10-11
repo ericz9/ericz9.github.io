@@ -15,7 +15,7 @@ tags: JavaScript学习
     ```
    2. 方式二
    ```javascript
-    var person = { age = 24 };
+    var person = { age : 24 };
     ```
 2. #### 使用对象构造器
    ```javascript
