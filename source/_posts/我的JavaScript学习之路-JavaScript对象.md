@@ -1,7 +1,7 @@
 ---
-title: JavaScript对象
+title: 我的JavaScript学习之路 - JavaScript对象
 date: 2016-09-29 16:27:04
-tags: JavaScript学习
+tags: JavaScript学习之路
 ---
 [原文](http://www.w3school.com.cn/js/js_objects.asp)
 ### 对象是指带有属性和方法的特殊数据类型
