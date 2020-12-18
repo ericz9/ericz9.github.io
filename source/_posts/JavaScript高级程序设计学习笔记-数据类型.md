@@ -13,7 +13,7 @@ ECMAScript中有6种原始类型：Undefined、Null、Boolean、Number、String�
 * `typeof true; // boolean`
 * `typeof Symbol(); // symbol`
 
-# 类型判断
+## 类型判断
 从上面可以看出，typeof 可以准确的进行大部分原始类型的检测，唯一例外的是 `typeof null` 返回的是 object。
 
 更严重的是，typeof 对于 Array、Date等类型均返回 object，在很多情况下，这可能并不是我们所期望的。
