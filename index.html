@@ -114,7 +114,7 @@
         
   
     <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2020/12/17/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">JavaScript高级程序设计学习笔记-数据类型</a>
+      <a class="article-title" href="/2020/12/17/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">JavaScript高级程序设计学习笔记 - 数据类型</a>
     </h1>
   
 
@@ -153,32 +153,55 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> == <span class="literal">undefined</span>); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="literal">null</span> === <span class="literal">undefined</span>); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 
 <h1 id="Boolean-类型"><a href="#Boolean-类型" class="headerlink" title="Boolean 类型"></a>Boolean 类型</h1><p>Boolean 有两个字面值： true 和 false。</p>
-<p>对于任意数据类型，都可以使用 Boolean() 转型函数获得一个布尔值，下表列出了详细的转换规则：<br>| 数据类型 | 转换为 true 的值 | 转换为 false 的值 |<br>:-: | :-: | :-: | :-: | :-:<br>| String | 非空字符串 | 空字符串 |</p>
+<p>对于任意数据类型，都可以使用 Boolean() 转型函数获得一个布尔值，下表列出了详细的转换规则：</p>
 <table>
 <thead>
 <tr>
-<th align="center">&lt;!– name</th>
-<th align="center">111</th>
-<th align="center">222</th>
-<th align="center">333</th>
-<th align="center">444</th>
+<th align="center">数据类型</th>
+<th align="center">转换为 true 的值</th>
+<th align="center">转换为 false 的值</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">aaa</td>
-<td align="center">bbb</td>
-<td align="center">ccc</td>
-<td align="center">ddd</td>
-<td align="center">eee</td>
+<td align="center">String</td>
+<td align="center">非空字符串</td>
+<td align="center">空字符串</td>
 </tr>
 <tr>
-<td align="center">fff</td>
-<td align="center">ggg</td>
-<td align="center">hhh</td>
-<td align="center">iii</td>
-<td align="center">000</td>
+<td align="center">Number</td>
+<td align="center">非零数值（包括无穷值）</td>
+<td align="center">0、NaN</td>
+</tr>
+<tr>
+<td align="center">Object</td>
+<td align="center">任意对象</td>
+<td align="center">null</td>
+</tr>
+<tr>
+<td align="center">Undefined</td>
+<td align="center">N/A（不存在）</td>
+<td align="center">undefined</td>
 </tr>
 </tbody></table>
+<h1 id="Number-类型"><a href="#Number-类型" class="headerlink" title="Number 类型"></a>Number 类型</h1><p>ECMAScript使用 IEEE 754 格式表示整数和浮点值，这就导致在小数运算中，经常产生舍入错误，如 <code>console.log(0.1 + 0.2); // 0.30000000000000004</code></p>
+<p>Number()、parseInt() 和 parseFloat() 都可以进行数值转换，它们的区别如下：</p>
+<ul>
+<li>布尔值<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">true</span>)); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">false</span>)); <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="literal">true</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="literal">false</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="literal">true</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="literal">false</span>)); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>null 和 undefined<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">null</span>)); <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="literal">undefined</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="literal">null</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="literal">undefined</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="literal">null</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="literal">undefined</span>)); <span class="comment">// NaN</span></span><br></pre></td></tr></table></figure></li>
+<li>字符串<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 空字符串</span></span><br><span class="line"><span class="comment">// parseInt，如果第一个字符不是数值、加号或减号，立即返回 NaN</span></span><br><span class="line"><span class="comment">// parseFloat同上</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">&#x27;&#x27;</span>)); <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">&#x27;&#x27;</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">&#x27;&#x27;</span>)); <span class="comment">// NaN</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 小数</span></span><br><span class="line"><span class="comment">// parseInt 会取截至到小数点之前的数值</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">&#x27;1.1&#x27;</span>)); <span class="comment">// 1.1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">&#x27;1.1&#x27;</span>)); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">&#x27;1.1&#x27;</span>)); <span class="comment">// 1.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Number 和 parseFloat 始终会忽略前面的0</span></span><br><span class="line"><span class="comment">// parseInt 则特殊一点，如果以&quot;0x&quot;开头，则被解释为16进制；如果以“0”开头且紧跟数值字符，在非严格模式下，会被某些实现解释为8进制</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">&#x27;01.1&#x27;</span>)); <span class="comment">// 1.1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">&#x27;01.1&#x27;</span>)); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">&#x27;01.1&#x27;</span>)); <span class="comment">// 1.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 包含非数值字符</span></span><br><span class="line"><span class="comment">// parseInt 和 parseFloat 会依次检测每个字符，直到末尾，或遇到非数值字符</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">&#x27;1.1a&#x27;</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">&#x27;1.1a&#x27;</span>)); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">&#x27;1.1a&#x27;</span>)); <span class="comment">// 1.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 以非数值、加号或减号开头，立即返回NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">&#x27;a1.1&#x27;</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">&#x27;a1.1&#x27;</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">&#x27;a1.1&#x27;</span>)); <span class="comment">// NaN</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 多个小数点</span></span><br><span class="line"><span class="comment">// 其实情况与传入的参数为 &quot;1.1a&quot; 时一致</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>(<span class="string">&#x27;1.1.1&#x27;</span>)); <span class="comment">// NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseInt</span>(<span class="string">&#x27;1.1.1&#x27;</span>)); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>(<span class="string">&#x27;1.1.1&#x27;</span>)); <span class="comment">// 1.1</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>书中建议，如果明确需要转换为整数，可以优先使用 parseInt() 函数，它更专注于字符串中是否包含数值模式。</p>
+</blockquote>
+<h1 id="String-类型"><a href="#String-类型" class="headerlink" title="String 类型"></a>String 类型</h1><p>单独写一篇文章讲解</p>
+<h1 id="Symbol-类型"><a href="#Symbol-类型" class="headerlink" title="Symbol 类型"></a>Symbol 类型</h1><p>单独写一篇文章讲解</p>
+<h1 id="Object-类型"><a href="#Object-类型" class="headerlink" title="Object 类型"></a>Object 类型</h1><p>Object 是所有对象的基类，它有几个常用属性或方法：</p>
+<ul>
+<li>hasOwnProperty<br>用来确定属性是在实例上，还是在原型对象上<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">Person.prototype.name = <span class="string">&quot;Nicholas&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> person = <span class="keyword">new</span> Person();</span><br><span class="line">person.age = <span class="number">20</span>;</span><br><span class="line"><span class="built_in">console</span>.log(person.hasOwnProperty(<span class="string">&#x27;name&#x27;</span>)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(person.hasOwnProperty(<span class="string">&#x27;age&#x27;</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+<li>isPrototypeOf<br>以上面代码为例，用于判断person对象的原型是否指向Person.prototype<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(Person.prototype.isPrototypeOf(person)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(person.__proto__ === Person.prototype); <span class="comment">// true</span></span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
@@ -746,7 +769,7 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
-              <h6 style="margin: 0;"><a href="/2020/12/17/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">JavaScript高级程序设计学习笔记-数据类型</a></h6>
+              <h6 style="margin: 0;"><a href="/2020/12/17/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">JavaScript高级程序设计学习笔记 - 数据类型</a></h6>
               <span>December 17, 2020</span>
             </div>
 
