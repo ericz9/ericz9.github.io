@@ -1,5 +1,5 @@
 ---
-title: JavaScript高级程序设计学习笔记-数据类型
+title: JavaScript高级程序设计学习笔记 - 数据类型
 date: 2020-12-17 09:30:51
 tags: JavaScript高级程序设计学习笔记
 ---
