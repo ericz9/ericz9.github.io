@@ -106,6 +106,117 @@
         
           <section id="main">
   
+    <article id="post-JavaScript高级程序设计学习笔记-数据类型-Symbol"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2020/12/21/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-Symbol/">JavaScript高级程序设计学习笔记 - 数据类型(Symbol)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2020/12/21/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-Symbol/" class="article-date">
+	  <time datetime="2020-12-21T01:50:17.000Z" itemprop="datePublished">December 21, 2020</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Symbol（符号） 是原始值，其实例是唯一、不可变的，它的用途是用做对象的非字符串形式的属性，而不会产生同名冲突。</p>
+<h1 id="符号初始化"><a href="#符号初始化" class="headerlink" title="符号初始化"></a>符号初始化</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 符号需要使用 Symbol() 函数初始化</span></span><br><span class="line"><span class="keyword">let</span> genericSymbol = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="keyword">let</span> otherGenericSymbol = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="built_in">console</span>.log(genericSymbol == otherGenericSymbol); <span class="comment">// false </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> fooSymbol = <span class="built_in">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> otherFooSymbol = <span class="built_in">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(fooSymbol == otherFooSymbol); <span class="comment">// false </span></span><br></pre></td></tr></table></figure>
+
+<h1 id="全局符号"><a href="#全局符号" class="headerlink" title="全局符号"></a>全局符号</h1><p>使用 Symbol.for() 创建全局符号，它是一个幂等操作。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> globalSymbol = <span class="built_in">Symbol</span>.for(<span class="string">&#x27;foo&#x27;</span>); <span class="comment">// 创建全局符号</span></span><br><span class="line"><span class="keyword">let</span> otherGlobalSymbol = <span class="built_in">Symbol</span>.for(<span class="string">&#x27;foo&#x27;</span>); <span class="comment">// 重用已定义的全局符号</span></span><br><span class="line"><span class="built_in">console</span>.log(globalSymbol === otherGlobalSymbol); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="符号属性"><a href="#符号属性" class="headerlink" title="符号属性"></a>符号属性</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> fooSymbol = <span class="built_in">Symbol</span>(<span class="string">&#x27;foo&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> barSymbol = <span class="built_in">Symbol</span>(<span class="string">&#x27;bar&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> bazSymbol = <span class="built_in">Symbol</span>(<span class="string">&#x27;baz&#x27;</span>);</span><br><span class="line"><span class="keyword">let</span> quxSymbol = <span class="built_in">Symbol</span>(<span class="string">&#x27;qux&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">  foo: <span class="string">&#x27;foo&#x27;</span>,</span><br><span class="line">  [fooSymbol]: <span class="string">&#x27;foo symbol&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(o, barSymbol, &#123; <span class="attr">value</span>: <span class="string">&#x27;bar symbol&#x27;</span> &#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperties(o, &#123;</span><br><span class="line">  [bazSymbol]: &#123; <span class="attr">value</span>: <span class="string">&#x27;baz symbol&#x27;</span> &#125;,</span><br><span class="line">  [quxSymbol]: &#123; <span class="attr">value</span>: <span class="string">&#x27;qux symbol&#x27;</span> &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回常规属性</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(o)); <span class="comment">// [&#x27;foo&#x27;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回符号属性</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertySymbols(o)); <span class="comment">// [Symbol(foo), Symbol(bar), Symbol(baz), Symbol(qux)]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回常规属性和符号属性</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Reflect</span>.ownKeys(o)); <span class="comment">// [&quot;foo&quot;, Symbol(foo), Symbol(bar), Symbol(baz), Symbol(qux)]</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="常用内置符号"><a href="#常用内置符号" class="headerlink" title="常用内置符号"></a>常用内置符号</h1><p>内置符号就是全局函数 Symbol 的普通字符串属性，指向一个符号的实例，它们最重要的用途是方便开发者重新定义，从而改变原生结构行为。</p>
+<h2 id="Symbol-asyncIterator"><a href="#Symbol-asyncIterator" class="headerlink" title="Symbol.asyncIterator"></a>Symbol.asyncIterator</h2><blockquote>
+<p>一个方法，该方法返回对象默认的 AsyncIterator。由 for-await-of 语句使用</p>
+</blockquote>
+<h2 id="Symbol-hasInstance"><a href="#Symbol-hasInstance" class="headerlink" title="Symbol.hasInstance"></a>Symbol.hasInstance</h2><blockquote>
+<p>一个方法，该方法决定一个构造器对象是否认可一个对象是它的实例。由 instanceof 操作符使用</p>
+</blockquote>
+<p>在 ES6 中，instanceof 操作符会使用 Symbol.hasInstance 函数来确定关系，它定义在 Function 的原型上，因此可以在类的静态方法中定义</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line"> <span class="keyword">static</span> [<span class="built_in">Symbol</span>.hasInstance]() &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> foo = <span class="keyword">new</span> Foo();</span><br><span class="line"><span class="built_in">console</span>.log(foo <span class="keyword">instanceof</span> Foo); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-isConcatSpreadable"><a href="#Symbol-isConcatSpreadable" class="headerlink" title="Symbol.isConcatSpreadable"></a>Symbol.isConcatSpreadable</h2><blockquote>
+<p>一个布尔值，如果是 true，则意味着对象应该用 Array.prototype.concat()打平其数组元素</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo = [<span class="string">&#x27;foo&#x27;</span>];</span><br><span class="line"><span class="keyword">let</span> bar = [<span class="string">&#x27;bar&#x27;</span>];</span><br><span class="line"></span><br><span class="line">bar[<span class="built_in">Symbol</span>.isConcatSpreadable] = <span class="literal">false</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo.concat(bar)); <span class="comment">// [&#x27;foo&#x27;, Array(1)]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-iterator"><a href="#Symbol-iterator" class="headerlink" title="Symbol.iterator"></a>Symbol.iterator</h2><blockquote>
+<p>一个方法，该方法返回对象默认的迭代器。由 for-of 语句使用</p>
+</blockquote>
+<h2 id="Symbol-match"><a href="#Symbol-match" class="headerlink" title="Symbol.match"></a>Symbol.match</h2><blockquote>
+<p>一个正则表达式方法，该方法用正则表达式去匹配字符串。由 String.prototype.match()方法使用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;foobar&#x27;</span>.match(<span class="regexp">/bar/</span>)); <span class="comment">// [&quot;bar&quot;, index: 3, input: &quot;foobar&quot;, groups: undefined]</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StringMatcher</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">str</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.str = str;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 重新定义 Symbol.match 函数，从而让 match() 方法可以使用非正则表达式实例</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;String&#125;</span> </span>target 调用 match() 方法的字符串</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  [<span class="built_in">Symbol</span>.match](target) &#123;</span><br><span class="line">    <span class="keyword">return</span> target.includes(<span class="built_in">this</span>.str);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;foobar&#x27;</span>.match(<span class="keyword">new</span> StringMatcher(<span class="string">&#x27;bar&#x27;</span>))); <span class="comment">// true </span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-replace"><a href="#Symbol-replace" class="headerlink" title="Symbol.replace"></a>Symbol.replace</h2><blockquote>
+<p>一个正则表达式方法，该方法替换一个字符串中匹配的子串。由 String.prototype.replace()方法使用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StringReplacer</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">str</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.str = str;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 重新定义 Symbol.replace 函数，从而让 replace() 方法可以使用非正则表达式实例</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;String&#125;</span> </span>target 调用 replace() 方法的字符串</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;String&#125;</span> </span>replacement 被替换后的值</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  [<span class="built_in">Symbol</span>.replace](target, replacement) &#123;</span><br><span class="line">    <span class="keyword">return</span> target.split(<span class="built_in">this</span>.str).join(replacement);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;barfoobaz&#x27;</span>.replace(<span class="keyword">new</span> StringReplacer(<span class="string">&#x27;foo&#x27;</span>), <span class="string">&#x27;qux&#x27;</span>)); <span class="comment">// &quot;barquxbaz&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-search"><a href="#Symbol-search" class="headerlink" title="Symbol.search"></a>Symbol.search</h2><blockquote>
+<p>一个正则表达式方法，该方法返回字符串中匹配正则表达式的索引。由 String.prototype.search()方法使用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StringSearcher</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">str</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.str = str;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 重新定义 Symbol.search 函数，从而让 search() 方法可以使用非正则表达式实例</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;String&#125;</span> </span>target 调用 search() 方法的字符串</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  [<span class="built_in">Symbol</span>.search](target) &#123;</span><br><span class="line">    <span class="keyword">return</span> target.indexOf(<span class="built_in">this</span>.str);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;foobar&#x27;</span>.search(<span class="keyword">new</span> StringSearcher(<span class="string">&#x27;foo&#x27;</span>))); <span class="comment">// 0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-species"><a href="#Symbol-species" class="headerlink" title="Symbol.species"></a>Symbol.species</h2><blockquote>
+<p>一个函数值，该函数作为创建派生对象的构造函数</p>
+</blockquote>
+<p>它的意义在于，子类返回基类的实例，而非子类的实例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> <span class="keyword">extends</span> <span class="title">Promise</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> <span class="keyword">extends</span> <span class="title">Promise</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 指向基类 Promise 的实例</span></span><br><span class="line">  <span class="keyword">static</span> get [<span class="built_in">Symbol</span>.species]() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> Foo(<span class="function"><span class="params">r</span> =&gt;</span> r()).then(<span class="function"><span class="params">v</span> =&gt;</span> v) <span class="keyword">instanceof</span> Foo) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> Bar(<span class="function"><span class="params">r</span> =&gt;</span> r()).then(<span class="function"><span class="params">v</span> =&gt;</span> v) <span class="keyword">instanceof</span> Bar) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-split"><a href="#Symbol-split" class="headerlink" title="Symbol.split"></a>Symbol.split</h2><blockquote>
+<p>一个正则表达式方法，该方法在匹配正则表达式的索引位置拆分字符串。由 String.prototype.split()方法使用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StringSplitter</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">str</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.str = str;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 重新定义 Symbol.split 函数，从而让 split() 方法可以使用非正则表达式实例</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param <span class="type">&#123;String&#125;</span> </span>target 调用 split() 方法的字符串</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  [<span class="built_in">Symbol</span>.split](target) &#123;</span><br><span class="line">    <span class="keyword">return</span> target.split(<span class="built_in">this</span>.str);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;barfoobaz&#x27;</span>.split(<span class="keyword">new</span> StringSplitter(<span class="string">&#x27;foo&#x27;</span>))); <span class="comment">// [&quot;bar&quot;, &quot;baz&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-toPrimitive"><a href="#Symbol-toPrimitive" class="headerlink" title="Symbol.toPrimitive"></a>Symbol.toPrimitive</h2><blockquote>
+<p>一个方法，该方法将对象转换为相应的原始值。由 ToPrimitive 抽象操作使用</p>
+</blockquote>
+<p>很多内置操作的场景下，会将对象强制转换为原始值，这时候我们可以使用该内置符号改变默认行为</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> </span>&#123; </span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="comment">// 支持三种模式（string、number、default）</span></span><br><span class="line">    <span class="built_in">this</span>[<span class="built_in">Symbol</span>.toPrimitive] = <span class="function"><span class="keyword">function</span>(<span class="params">hint</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">switch</span> (hint) &#123;</span><br><span class="line">        <span class="comment">// 该场合需转换成数值</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;number&#x27;</span>:</span><br><span class="line">          <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">        <span class="comment">// 该场合需转换成字符串</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;string&#x27;</span>:</span><br><span class="line">          <span class="keyword">return</span> <span class="string">&#x27;string bar&#x27;</span>;</span><br><span class="line">        <span class="comment">// 该场合可以转成数值，也可以转成字符串</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">&#x27;default&#x27;</span>:</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">          <span class="keyword">return</span> <span class="string">&#x27;default bar&#x27;</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> bar = <span class="keyword">new</span> Bar();</span><br><span class="line"><span class="built_in">console</span>.log(bar * <span class="number">2</span>); <span class="comment">// 6</span></span><br><span class="line"><span class="built_in">console</span>.log(bar + <span class="number">2</span>); <span class="comment">// default bar2</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">String</span>(bar)); <span class="comment">// string bar</span></span><br><span class="line"><span class="built_in">console</span>.log(bar == <span class="string">&#x27;default bar&#x27;</span>); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-toStringTag"><a href="#Symbol-toStringTag" class="headerlink" title="Symbol.toStringTag"></a>Symbol.toStringTag</h2><blockquote>
+<p>一个字符串，该字符串用于创建对象的默认字符串描述。由内置方法 Object.prototype.toString()使用</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;&#125;</span><br><span class="line"><span class="keyword">const</span> foo = <span class="keyword">new</span> Foo();</span><br><span class="line"><span class="built_in">console</span>.log(foo.toString()); <span class="comment">// [object Object]</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>[<span class="built_in">Symbol</span>.toStringTag] = <span class="string">&#x27;Bar&#x27;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> bar = <span class="keyword">new</span> Bar();</span><br><span class="line"><span class="built_in">console</span>.log(bar.toString()); <span class="comment">// [object Bar]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-unscopables"><a href="#Symbol-unscopables" class="headerlink" title="Symbol.unscopables"></a>Symbol.unscopables</h2><blockquote>
+<p>一个对象，该对象所有的以及继承的属性，都会从关联对象的 with 环境绑定中排除</p>
+</blockquote>
+<p>不推荐使用 with，因此也不推荐使用 Symbol.unscopables</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">JavaScript高级程序设计学习笔记</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-JavaScript高级程序设计学习笔记-数据类型"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -784,6 +895,18 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2020/12/21/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-Symbol/">JavaScript高级程序设计学习笔记 - 数据类型(Symbol)</a></h6>
+              <span>December 21, 2020</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2020/12/17/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">JavaScript高级程序设计学习笔记 - 数据类型</a></h6>
               <span>December 17, 2020</span>
             </div>
@@ -838,18 +961,6 @@
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2016/10/21/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E4%B9%8B%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82/">微信小程序开发之数据请求</a></h6>
-              <span>October 21, 2016</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -862,7 +973,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" rel="tag">JavaScript学习之路</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">JavaScript高级程序设计学习笔记</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">微信小程序</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93-%E8%AE%A1%E5%88%92/" rel="tag">总结&计划</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" rel="tag">JavaScript学习之路</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">JavaScript高级程序设计学习笔记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">微信小程序</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93-%E8%AE%A1%E5%88%92/" rel="tag">总结&计划</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -882,7 +993,7 @@
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
