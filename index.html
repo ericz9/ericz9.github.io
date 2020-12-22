@@ -106,6 +106,73 @@
         
           <section id="main">
   
+    <article id="post-JavaScript高级程序设计学习笔记-变量复制"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2020/12/22/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%98%E9%87%8F%E5%A4%8D%E5%88%B6/">JavaScript高级程序设计学习笔记 - 变量复制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2020/12/22/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%98%E9%87%8F%E5%A4%8D%E5%88%B6/" class="article-date">
+	  <time datetime="2020-12-22T01:59:11.000Z" itemprop="datePublished">December 22, 2020</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们已经知道，ECMAScript 中包含两种类型的数据：原始值和引用值。其中，原始值按值访问，引用值按引用访问。</p>
+<h1 id="按值访问和按引用访问"><a href="#按值访问和按引用访问" class="headerlink" title="按值访问和按引用访问"></a>按值访问和按引用访问</h1><p>首先我们需要了解原始值和引用值的内存分配机制：</p>
+<ul>
+<li>原始值：存储在栈（stack）中</li>
+<li>引用值：有指针和实际值，实际的值存储在堆（heap）中，指针存储在栈中，它指向实际的值所存储的地址</li>
+</ul>
+<p>而不同的内存分配，也就出现了上面所说的两种不同的访问机制</p>
+<p>原始值我们可以直接从栈中获取，这就是按值访问</p>
+<p>而引用值，我们需要先在栈中得到它所指向的实际地址，然后根据该地址获得实际的值，这就是按引用访问</p>
+<h1 id="只有按值传递"><a href="#只有按值传递" class="headerlink" title="只有按值传递"></a>只有按值传递</h1><p><strong>先说结论，所有变量的复制，都是按值传递，没有按引用传递一说</strong></p>
+<ul>
+<li>复制原始值：产生一个副本，它们没有任何关系，完全独立，互不干扰</li>
+<li>复制引用值：<ul>
+<li>实际就是复制指针，产生一个副本，两个指针之间没有任何关系，完全独立，互不干扰</li>
+<li>两个指针的值都是该引用值的实际地址</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo = &#123; <span class="attr">name</span>: <span class="string">&#x27;foo&#x27;</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> bar = foo;</span><br><span class="line"><span class="built_in">console</span>.log(foo === bar); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 因为两个指针都指向同一个地址，所以改变 bar 的 name，foo 中也会同步改变</span></span><br><span class="line">bar.name = <span class="string">&#x27;foo changed&#x27;</span>;</span><br><span class="line"><span class="built_in">console</span>.log(foo.name); <span class="comment">// foo changed</span></span><br><span class="line"><span class="built_in">console</span>.log(bar.name); <span class="comment">// foo changed</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 因为是按值传递，两个指针相互独立，给 bar 赋值，会重新产生一个指针，指向 bar 实际的值的地址</span></span><br><span class="line"><span class="comment">// 如果是按引用传递，foo 也应被改变才对</span></span><br><span class="line">bar = &#123; <span class="attr">name</span>: <span class="string">&#x27;bar&#x27;</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(foo.name); <span class="comment">// foo changed</span></span><br><span class="line"><span class="built_in">console</span>.log(bar.name); <span class="comment">// bar</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>理解 JS 中只有按值传递的重点在于，复制原始值时会在栈中产生一个实际值的副本，复制引用值时会在栈中产生一个指针的副本（指针是独立的，但都指向实际的值所在堆中的同一个地址）。<strong>函数的参数传递也是如此</strong>。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">JavaScript高级程序设计学习笔记</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-JavaScript高级程序设计学习笔记-数据类型-Symbol"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -788,50 +855,12 @@
 <!-- Table of Contents -->
 
   
-    <article id="post-使用GitHub-Pages和hexo搭建我的个人博客"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+
+
+  <nav id="page-nav">
     
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2016/09/29/%E4%BD%BF%E7%94%A8GitHub-Pages%E5%92%8Chexo%E6%90%AD%E5%BB%BA%E6%88%91%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">使用GitHub Pages和hexo搭建我的个人博客</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2016/09/29/%E4%BD%BF%E7%94%A8GitHub-Pages%E5%92%8Chexo%E6%90%AD%E5%BB%BA%E6%88%91%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-date">
-	  <time datetime="2016-09-29T08:17:31.000Z" itemprop="datePublished">September 29, 2016</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>参考文章：<br><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/index.html">Hexo官方文档</a><br><a target="_blank" rel="noopener" href="http://crazymilk.github.io/2015/12/28/GitHub-Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">CrazyMilk：GitHub Pages + Hexo搭建博客</a><br><a target="_blank" rel="noopener" href="http://luckykun.com/work/2016-04-23/heoll-hexo.html">luckykun：hexo搭建属于自己的博客</a><br><a target="_blank" rel="noopener" href="http://www.zhihu.com/question/21193762">知乎：使用hexo，如果换了电脑怎么更新博客？</a></p>
-<p>使用主题：<br><a target="_blank" rel="noopener" href="https://github.com/litten/hexo-theme-yilia">Yilia</a></p>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+  </nav>
 
 </section>
           <aside id="sidebar">
@@ -895,6 +924,18 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2020/12/22/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%98%E9%87%8F%E5%A4%8D%E5%88%B6/">JavaScript高级程序设计学习笔记 - 变量复制</a></h6>
+              <span>December 22, 2020</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2020/12/21/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-Symbol/">JavaScript高级程序设计学习笔记 - 数据类型(Symbol)</a></h6>
               <span>December 21, 2020</span>
             </div>
@@ -949,18 +990,6 @@
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2016/10/25/%E6%88%91%E7%9A%84JavaScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-%E7%BB%A7%E6%89%BF/">我的JavaScript学习之路 - 继承</a></h6>
-              <span>October 25, 2016</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -973,7 +1002,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" rel="tag">JavaScript学习之路</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">JavaScript高级程序设计学习笔记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">微信小程序</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93-%E8%AE%A1%E5%88%92/" rel="tag">总结&计划</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" rel="tag">JavaScript学习之路</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">JavaScript高级程序设计学习笔记</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag">微信小程序</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BB%93-%E8%AE%A1%E5%88%92/" rel="tag">总结&计划</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -993,7 +1022,7 @@
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
