@@ -1,7 +1,7 @@
 ---
 title: JavaScript高级程序设计学习笔记 - 数据类型
 date: 2020-12-17 09:30:51
-tags: JavaScript高级程序设计学习笔记
+tags: [红宝书, 红宝书第3章（语言基础）]
 ---
 ECMAScript中有6种原始类型：Undefined、Null、Boolean、Number、String、Symbol，一种复杂类型Object。
 

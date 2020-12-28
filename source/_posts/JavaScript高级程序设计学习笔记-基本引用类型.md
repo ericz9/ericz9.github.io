@@ -1,7 +1,7 @@
 ---
 title: JavaScript高级程序设计学习笔记 - 基本引用类型
 date: 2020-12-23 10:25:19
-tags: JavaScript高级程序设计学习笔记
+tags: [红宝书, 红宝书第5章（基本引用类型）]
 ---
 本文主要介绍 Date、RegExp 和 Math 的 API 方法
 
