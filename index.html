@@ -106,6 +106,103 @@
         
           <section id="main">
   
+    <article id="post-JavaScript高级程序设计学习笔记-集合引用类型-Array"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2020/12/29/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B-Array/">JavaScript高级程序设计学习笔记 - 集合引用类型(Array)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2020/12/29/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B-Array/" class="article-date">
+	  <time datetime="2020-12-29T00:34:50.000Z" itemprop="datePublished">December 29, 2020</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>尽量使用字面量的方式创建数组</p>
+<h1 id="创建数组"><a href="#创建数组" class="headerlink" title="创建数组"></a>创建数组</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr1 = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">3</span>); <span class="comment">// [undefined, undefined, undefined]</span></span><br><span class="line"><span class="keyword">let</span> arr2 = [<span class="number">3</span>]; <span class="comment">// [3]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="string">&#x27;0&#x27;</span>: <span class="string">&#x27;a&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;1&#x27;</span>: <span class="string">&#x27;b&#x27;</span>,</span><br><span class="line">  length: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 将类数组结构转换为数组实例</span></span><br><span class="line"><span class="comment">// 它也可以转换只有 length 属性但不具备 iterator的结构，而 ... 拓展运算符做不到这一点</span></span><br><span class="line"><span class="keyword">let</span> arr3 = <span class="built_in">Array</span>.from(obj); <span class="comment">// [&quot;a&quot;, &quot;b&quot;]</span></span><br><span class="line"><span class="keyword">let</span> arr4 = [...obj]; <span class="comment">// obj is not iterable</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 把一组参数转换为数组</span></span><br><span class="line"><span class="keyword">let</span> arr5 = <span class="built_in">Array</span>.of(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>); <span class="comment">// [&quot;a&quot;, &quot;b&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="检测数组"><a href="#检测数组" class="headerlink" title="检测数组"></a>检测数组</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Array</span>.isArray([]); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="迭代器方法"><a href="#迭代器方法" class="headerlink" title="迭代器方法"></a>迭代器方法</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="string">&quot;foo&quot;</span>, <span class="string">&quot;bar&quot;</span>, <span class="string">&quot;baz&quot;</span>, <span class="string">&quot;qux&quot;</span>];</span><br><span class="line"><span class="built_in">console</span>.log([...arr.keys()]); <span class="comment">// [0, 1, 2, 3]</span></span><br><span class="line"><span class="built_in">console</span>.log([...arr.values()]); <span class="comment">// [&quot;foo&quot;, &quot;bar&quot;, &quot;baz&quot;, &quot;qux&quot;]</span></span><br><span class="line"><span class="built_in">console</span>.log([...arr.entries()]); <span class="comment">// [Array(2), Array(2), Array(2), Array(2)]</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> [idx, element] <span class="keyword">of</span> arr.entries()) &#123; </span><br><span class="line">  <span class="built_in">console</span>.log(idx); </span><br><span class="line">  <span class="built_in">console</span>.log(element); </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 0</span></span><br><span class="line"><span class="comment">// foo</span></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// bar</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// baz</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// qux</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="复制与填充"><a href="#复制与填充" class="headerlink" title="复制与填充"></a>复制与填充</h1><p>fill 向数组中插入指定值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> zeroes = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 5 填充整个数组</span></span><br><span class="line"><span class="built_in">console</span>.log(zeroes.fill(<span class="number">5</span>)); <span class="comment">// [5, 5, 5, 5, 5]</span></span><br><span class="line">zeroes.fill(<span class="number">0</span>); <span class="comment">// 重置</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 6 填充索引大于等于 3 的元素</span></span><br><span class="line"><span class="built_in">console</span>.log(zeroes.fill(<span class="number">6</span>, <span class="number">3</span>)); <span class="comment">// [0, 0, 0, 6, 6]</span></span><br><span class="line">zeroes.fill(<span class="number">0</span>); <span class="comment">// 重置</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 7 填充索引大于等于 1 且小于 3 的元素</span></span><br><span class="line"><span class="built_in">console</span>.log(zeroes.fill(<span class="number">7</span>, <span class="number">1</span>, <span class="number">3</span>)); <span class="comment">// [0, 7, 7, 0, 0]</span></span><br></pre></td></tr></table></figure>
+
+<p>copyWithin 按照指定范围浅复制数组中的部分内容，然后将它们插入到指定索引开始的位置</p>
+<h1 id="栈方法与队列方法"><a href="#栈方法与队列方法" class="headerlink" title="栈方法与队列方法"></a>栈方法与队列方法</h1><p>栈是 LIFO 结构（后进先出）</p>
+<ul>
+<li>push：添加到数组末尾，返回最新长度</li>
+<li>pop：移除数组最后一项，返回被移除项</li>
+</ul>
+<p>队列是 FIFO 结构（先进先出）</p>
+<ul>
+<li>unshift：添加到数组开头，返回最新长度</li>
+<li>shift：移除数组第一项，返回被移除项</li>
+</ul>
+<h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><ul>
+<li>reverse()：降序（用的很少）</li>
+<li>sort()：默认升序。排序时，对每一项使用 String() 转型函数，然后比较字符串来决定顺序<ul>
+<li>sort((a, b) =&gt; a - b)：升序</li>
+<li>sort((a, b) =&gt; b - a)：降序</li>
+</ul>
+</li>
+</ul>
+<h1 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h1><ul>
+<li>concat：合并数组，返回新数组</li>
+<li>slice：切分数组，返回新数组。不包含结束索引的元素</li>
+<li>splice：插入、删除或替换数组，返回删除的元素组成的数组，会修改原数组</li>
+</ul>
+<h1 id="搜素和位置方法"><a href="#搜素和位置方法" class="headerlink" title="搜素和位置方法"></a>搜素和位置方法</h1><ul>
+<li>indexOf：从前向后搜索，返回元素在数组中的索引，未找到返回 -1</li>
+<li>lastIndexOf：从后向前搜索，返回元素在数组中的索引，未找到返回 -1</li>
+<li>includes：是否包含至少一个匹配项，返回布尔值</li>
+<li>find：返回第一个匹配的项</li>
+<li>findIndex：返回第一个匹配项的索引</li>
+</ul>
+<h1 id="迭代方法"><a href="#迭代方法" class="headerlink" title="迭代方法"></a>迭代方法</h1><p>对数组的每一项，都运行传入的函数</p>
+<ul>
+<li>every：如果都返回 true，则返回 true</li>
+<li>filter：返回结果为 true 的数组</li>
+<li>forEach：没有返回值</li>
+<li>map：返回每次函数调用所返回的结果的数组</li>
+<li>some：某一项返回 true，则返回 true</li>
+</ul>
+<h1 id="归并方法"><a href="#归并方法" class="headerlink" title="归并方法"></a>归并方法</h1><ul>
+<li>reduce：从第一项开始，遍历到最后一项</li>
+<li>reduceRight：从最后一项开始，遍历到第一项<br>归并方法接收两个参数：对每一项都会运行的归并函数，以及可选的以之为归并起点的初始值<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// prev：上一个归并值</span></span><br><span class="line"><span class="comment">// cur：当前项</span></span><br><span class="line"><span class="comment">// index：当前项的索引</span></span><br><span class="line"><span class="comment">// array：和数组本身</span></span><br><span class="line"><span class="keyword">let</span> sum = values.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">prev, cur, index, array</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(prev, cur);</span><br><span class="line">  <span class="keyword">return</span> prev + cur;</span><br><span class="line">&#125;, <span class="number">100</span>);</span><br><span class="line"><span class="comment">// 100 1</span></span><br><span class="line"><span class="comment">// 101 2</span></span><br><span class="line"><span class="comment">// 103 3</span></span><br><span class="line"><span class="comment">// 106 4</span></span><br><span class="line"><span class="comment">// 110 5</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(sum); <span class="comment">// 115</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6/" rel="tag">红宝书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC6%E7%AB%A0%EF%BC%88%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%EF%BC%89/" rel="tag">红宝书第6章（集合引用类）</a></li></ul>
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-JavaScript高级程序设计学习笔记-位操作符"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -850,6 +947,18 @@ table th:first-child {
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2020/12/29/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B-Array/">JavaScript高级程序设计学习笔记 - 集合引用类型(Array)</a></h6>
+              <span>December 29, 2020</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2020/12/24/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AC%A6/">JavaScript高级程序设计学习笔记 - 位操作符</a></h6>
               <span>December 24, 2020</span>
             </div>
@@ -904,18 +1013,6 @@ table th:first-child {
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2020/12/16/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E/">JavaScript高级程序设计学习笔记 - 变量声明</a></h6>
-              <span>December 16, 2020</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -928,7 +1025,7 @@ table th:first-child {
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6/" rel="tag">红宝书</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC3%E7%AB%A0%EF%BC%88%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%89/" rel="tag">红宝书第3章（语言基础）</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC4%E7%AB%A0%EF%BC%88%E5%8F%98%E9%87%8F%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%EF%BC%89/" rel="tag">红宝书第4章（变量、作用域与内存）</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC5%E7%AB%A0%EF%BC%88%E5%9F%BA%E6%9C%AC%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%EF%BC%89/" rel="tag">红宝书第5章（基本引用类型）</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/vscode/" rel="tag">vscode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6/" rel="tag">红宝书</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC3%E7%AB%A0%EF%BC%88%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%89/" rel="tag">红宝书第3章（语言基础）</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC4%E7%AB%A0%EF%BC%88%E5%8F%98%E9%87%8F%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%EF%BC%89/" rel="tag">红宝书第4章（变量、作用域与内存）</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC5%E7%AB%A0%EF%BC%88%E5%9F%BA%E6%9C%AC%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%EF%BC%89/" rel="tag">红宝书第5章（基本引用类型）</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC6%E7%AB%A0%EF%BC%88%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%EF%BC%89/" rel="tag">红宝书第6章（集合引用类）</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -938,7 +1035,7 @@ table th:first-child {
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/vscode/" style="font-size: 10px;">vscode</a> <a href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6/" style="font-size: 20px;">红宝书</a> <a href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC3%E7%AB%A0%EF%BC%88%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%89/" style="font-size: 15px;">红宝书第3章（语言基础）</a> <a href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC4%E7%AB%A0%EF%BC%88%E5%8F%98%E9%87%8F%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%EF%BC%89/" style="font-size: 10px;">红宝书第4章（变量、作用域与内存）</a> <a href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC5%E7%AB%A0%EF%BC%88%E5%9F%BA%E6%9C%AC%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%EF%BC%89/" style="font-size: 10px;">红宝书第5章（基本引用类型）</a>
+      <a href="/tags/vscode/" style="font-size: 10px;">vscode</a> <a href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6/" style="font-size: 20px;">红宝书</a> <a href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC3%E7%AB%A0%EF%BC%88%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%EF%BC%89/" style="font-size: 15px;">红宝书第3章（语言基础）</a> <a href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC4%E7%AB%A0%EF%BC%88%E5%8F%98%E9%87%8F%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%EF%BC%89/" style="font-size: 10px;">红宝书第4章（变量、作用域与内存）</a> <a href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC5%E7%AB%A0%EF%BC%88%E5%9F%BA%E6%9C%AC%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%EF%BC%89/" style="font-size: 10px;">红宝书第5章（基本引用类型）</a> <a href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC6%E7%AB%A0%EF%BC%88%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%EF%BC%89/" style="font-size: 10px;">红宝书第6章（集合引用类）</a>
     </div>
   </div>
 
@@ -948,7 +1045,7 @@ table th:first-child {
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
