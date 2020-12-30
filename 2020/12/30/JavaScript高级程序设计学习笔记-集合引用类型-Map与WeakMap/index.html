@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JavaScript高级程序设计学习笔记-集合引用类型(Map与WeakMap) | ericz9&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="红宝书红宝书第6章（集合引用类）" />
+  
+  
+  
+  
+  <meta name="description" content="Map 和 WeakMap 是真正的键值机制，它们的大多数特性也可以通过 Object 来实现。 Map12345678910111213141516&#x2F;&#x2F; 创建空映射const m1 &#x3D; new Map();&#x2F;&#x2F; 使用二维数组初始化const m2 &#x3D; new Map([  [&amp;#x27;key1&amp;#x27;, &amp;#x27;val1&amp;#x27;],  [&amp;#x27;key2&amp;#x27;, &amp;#x2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript高级程序设计学习笔记-集合引用类型(Map与WeakMap)">
+<meta property="og:url" content="http://ericz9.github.io/2020/12/30/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B-Map%E4%B8%8EWeakMap/index.html">
+<meta property="og:site_name" content="ericz9&#39;s blog">
+<meta property="og:description" content="Map 和 WeakMap 是真正的键值机制，它们的大多数特性也可以通过 Object 来实现。 Map12345678910111213141516&#x2F;&#x2F; 创建空映射const m1 &#x3D; new Map();&#x2F;&#x2F; 使用二维数组初始化const m2 &#x3D; new Map([  [&amp;#x27;key1&amp;#x27;, &amp;#x27;val1&amp;#x27;],  [&amp;#x27;key2&amp;#x27;, &amp;#x2">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-12-30T01:20:36.000Z">
+<meta property="article:modified_time" content="2020-12-30T02:40:06.658Z">
+<meta property="article:author" content="ericz9">
+<meta property="article:tag" content="红宝书">
+<meta property="article:tag" content="红宝书第6章（集合引用类）">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="ericz9&#39;s blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/fashion.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+
+
+<header id="allheader" class="site-header" role="banner" 
+   >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" rel="home" >
+                <img style="margin-bottom: 10px;"  width="320px" height="213px" alt="Hike News" src=" /images/pexels-alexas-fotos-2277784.jpg">
+              </a>
+            
+          </h1>
+          
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="/"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="archives"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="categories"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="tags"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="about"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-JavaScript高级程序设计学习笔记-集合引用类型-Map与WeakMap" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      JavaScript高级程序设计学习笔记-集合引用类型(Map与WeakMap)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2020/12/30/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B-Map%E4%B8%8EWeakMap/" class="article-date">
+	  <time datetime="2020-12-30T01:20:36.000Z" itemprop="datePublished">December 30, 2020</time>
+	</a>
+
+       
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Map 和 WeakMap 是真正的键值机制，它们的大多数特性也可以通过 Object 来实现。</p>
+<h1 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建空映射</span></span><br><span class="line"><span class="keyword">const</span> m1 = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用二维数组初始化</span></span><br><span class="line"><span class="keyword">const</span> m2 = <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">  [<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;val1&#x27;</span>],</span><br><span class="line">  [<span class="string">&#x27;key2&#x27;</span>, <span class="string">&#x27;val2&#x27;</span>]</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用自定义迭代器初始化</span></span><br><span class="line"><span class="keyword">const</span> m3 = <span class="keyword">new</span> <span class="built_in">Map</span>(&#123;</span><br><span class="line">  *[<span class="built_in">Symbol</span>.iterator]() &#123;</span><br><span class="line">    <span class="keyword">yield</span> [<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;val1&#x27;</span>];</span><br><span class="line">    <span class="keyword">yield</span> [<span class="string">&#x27;key2&#x27;</span>, <span class="string">&#x27;val2&#x27;</span>];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用属性及方法"><a href="#常用属性及方法" class="headerlink" title="常用属性及方法"></a>常用属性及方法</h2><ul>
+<li><code>size</code>：返回键值对的总数量</li>
+<li><code>set()</code>：添加一组新的键值对。返回映射实例，因此可以连接多个操作</li>
+<li><code>get()</code>：通过键名，获取对应的值</li>
+<li><code>has()</code>：通过键名查询，存在时返回 true</li>
+<li><code>delete()</code>：通过键名，删除一个键值对</li>
+<li><code>clear()</code>：清空所有键值对</li>
+</ul>
+<h2 id="顺序与迭代"><a href="#顺序与迭代" class="headerlink" title="顺序与迭代"></a>顺序与迭代</h2><p>与 Object 不同的是，Map 会维护键值对的插入顺序</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = <span class="keyword">new</span> <span class="built_in">Map</span>([</span><br><span class="line">  [<span class="string">&#x27;key1&#x27;</span>, <span class="string">&#x27;val1&#x27;</span>],</span><br><span class="line">  [<span class="string">&#x27;key2&#x27;</span>, <span class="string">&#x27;val2&#x27;</span>]</span><br><span class="line">]);</span><br><span class="line"><span class="built_in">console</span>.log(foo.keys()); <span class="comment">// MapIterator &#123;&quot;key1&quot;, &quot;key2&quot;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.values()); <span class="comment">// MapIterator &#123;&quot;val1&quot;, &quot;val2&quot;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(foo.entries()); <span class="comment">// MapIterator &#123;&quot;key1&quot; =&gt; &quot;val1&quot;, &quot;key2&quot; =&gt; &quot;val2&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="选择-Object-还是-Map"><a href="#选择-Object-还是-Map" class="headerlink" title="选择 Object 还是 Map"></a>选择 Object 还是 Map</h2><ul>
+<li>内存占用：给定固定大小的内存，Map 大约可以比 Object 多存储50%的键值对</li>
+<li>插入性能：Map 一般会稍微快一点</li>
+<li>查找速度：差异极小，如果有大量查找操作，某些情况下 Object 更好一些</li>
+<li>删除性能：一般来说 Map 更快，特别是涉及到大量删除操作的情况下</li>
+</ul>
+<h1 id="WeakMap"><a href="#WeakMap" class="headerlink" title="WeakMap"></a>WeakMap</h1><p>WeakMap（弱映射）是 Map 的“兄弟”类型，“weak”表示它的键是“弱弱地拿着”。意思就是，这些键不属于正式的引用，不会阻止垃圾回收。不过，值的引用可不是“弱弱地拿着”，只要键存在，它的值就不会被垃圾回收。</p>
+<p>我们知道，只要对象还存在引用，就不会被垃圾回收，不过 WeakMap “打破了这个惯例”。</p>
+<p>我们假设在一个 WeakMap 中，有一对键值对的键为 key，值为 val。当 key 的引用只指向该键，没有被其他任何对象所引用时，因为键不属于正式的引用，所以它会被垃圾回收。而当 val 的引用只指向该值，没有被其他任何对象所引用时，因为值的引用是正式的引用，所以它就不会被垃圾回收。</p>
+<p><strong>基本上，如果你要往对象上添加数据，又不想干扰垃圾回收机制，就可以使用 WeakMap。</strong></p>
+<h2 id="与-Map-的不同点"><a href="#与-Map-的不同点" class="headerlink" title="与 Map 的不同点"></a>与 Map 的不同点</h2><ul>
+<li>键只能是 Object 或继承在 Object 的类型，使用非对象键会抛出 TypeError。值的类型没有限制</li>
+<li>没有 size 属性</li>
+<li>没有 clear() 方法</li>
+<li>不可迭代</li>
+</ul>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 私有变量</span></span><br><span class="line"><span class="keyword">const</span> wm = <span class="keyword">new</span> <span class="built_in">WeakMap</span>();</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    wm.set(<span class="built_in">this</span>, &#123;</span><br><span class="line">      name: <span class="string">&#x27;ericz9&#x27;</span></span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">getName</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> wm.get(<span class="built_in">this</span>).name;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> foo = <span class="keyword">new</span> Foo();</span><br><span class="line"><span class="built_in">console</span>.log(foo.getName()); <span class="comment">// ericz9</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6/" rel="tag">红宝书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BA%A2%E5%AE%9D%E4%B9%A6%E7%AC%AC6%E7%AB%A0%EF%BC%88%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%EF%BC%89/" rel="tag">红宝书第6章（集合引用类）</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/29/JavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B-Array/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">JavaScript高级程序设计学习笔记 - 集合引用类型(Array)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Map"><span class="nav-number">1.</span> <span class="nav-text">Map</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E5%8F%8A%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">常用属性及方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%BA%E5%BA%8F%E4%B8%8E%E8%BF%AD%E4%BB%A3"><span class="nav-number">1.2.</span> <span class="nav-text">顺序与迭代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9-Object-%E8%BF%98%E6%98%AF-Map"><span class="nav-number">1.3.</span> <span class="nav-text">选择 Object 还是 Map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WeakMap"><span class="nav-number">2.</span> <span class="nav-text">WeakMap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8E-Map-%E7%9A%84%E4%B8%8D%E5%90%8C%E7%82%B9"><span class="nav-number">2.1.</span> <span class="nav-text">与 Map 的不同点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.2.</span> <span class="nav-text">应用场景</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2020 ericz9&#39;s blog All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+    
+</script>
+    
+<div style="display: none;">
+  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+</div>
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+<script src="/js/bootstrap.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
